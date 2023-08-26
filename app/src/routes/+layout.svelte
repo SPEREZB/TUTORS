@@ -160,6 +160,7 @@
           </button>
         </div>
       {/if}
+
       <svelte:fragment slot="trail">
         {#if !isNotCourseRoute}
           <a href="http://localhost:3000/codificar">
@@ -173,7 +174,13 @@
           </a>
 
           <a href="http://localhost:3000/course/tutors-reference">
-            <img src="https://n9.cl/fikc2" alt="" width="35" height="25" margin-left="20" />
+            <img
+              src="data:image/png;base64,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"
+              alt=""
+              width="35"
+              height="25"
+              margin-left="20"
+            />
           </a>
 
           <a href="javascript:history.back()">
@@ -212,9 +219,7 @@
               {onlineDrawerOpen}
             />
           </div>
-        {:else}
-          <NavigationPrimaryButton href="/auth" label="Login / Register" />
-        {/if}
+        {:else}{/if}
         <span class="divider-vertical h-10 hidden lg:block" />
         <NavigationPrimaryLayoutMenu />
         {#if !isNotCourseRoute}
@@ -228,11 +233,13 @@
         {/if}
       </svelte:fragment>
     </NavigationPrimary>
+
     {#if !isNotCourseRoute}
       <PageHeader />
     {/if}
   </svelte:fragment>
   <slot />
+
   <svelte:fragment slot="pageFooter">
     {#if $page.url.pathname !== "/" && $page.url.pathname !== "/auth" && $page.url.pathname !== "/dashboard"}
       <div
