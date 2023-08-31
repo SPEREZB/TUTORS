@@ -59,8 +59,9 @@
 
   function executeCode() {
     try {
-      // Evaluates the code entered by the user
-      result = eval(code);
+      // Elimina los saltos de línea del código
+      const cleanedCode = code.replace(/\n/g, " ");
+      result = eval(cleanedCode); // Evalúa el código limpio
     } catch (error) {
       result = error.message;
     }
@@ -68,8 +69,8 @@
   function navigateToNewPage() {
     showExampleDialog = false;
     result = ""; // Limpia el resultado
-    page.navigateTo("otra-pagina"); // Cambia "otra-pagina" por la URL que deseas
   }
+
   function showExample() {
     showExampleDialog = true;
   }
@@ -184,11 +185,13 @@
 
     <main>
       <textarea bind:value={code} placeholder="Ingrese su código aquí" />
+      <button style="background-color: #007bff; color: white;" on:click={executeCode}
+        >Ejecutar</button
+      >
+
       <button
-        style="    background-color: #007bff;
-    color: white;
-"
-        on:click={executeCode}>Ejecutar</button
+        style="background-color: #7b0000; color: white; margin-top: 20px;"
+        on:click={() => navigateToNewPage()}>Limpiar</button
       >
       <button on:click={() => showExample()}>Mostrar Ejemplo</button>
 
@@ -201,25 +204,13 @@
       <!-- Cuadro de texto para mostrar el ejemplo -->
       {#if showExampleDialog}
         <div class="example-dialog">
-          <p class="example-code">Aquí tienes un ejemplo:</p>
           <div class="example-code">
-            // Suma dos números<br />
-            var numero1 = 8;<br />
-            var numero2 = 17;<br />
-            var suma = numero1 + numero2;<br /><br />
-
             // Construye un saludo personalizado<br />
             var nombre = "Juan";<br />
             var saludo = "¡Hola, " + nombre + "!";<br /><br />
-
-            // Muestra la suma y el saludo en la consola<br />
-            console.log(suma);<br />
-            console.log(saludo);<br /><br />
-
-            // Retorna un mensaje<br />
-            "Operaciones realizadas con éxito."
           </div>
         </div>
+        <button on:click={() => (showExampleDialog = false)}>Cerrar Ejemplo</button>
       {/if}
     </main>
 

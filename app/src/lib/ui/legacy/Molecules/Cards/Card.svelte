@@ -101,5 +101,6 @@
 
   a:hover {
     transform: translate(10px, 10px);
+    color: blue;
   }
 </style>
