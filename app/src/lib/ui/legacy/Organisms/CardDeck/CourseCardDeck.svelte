@@ -6,6 +6,8 @@
   let code = "";
   let result = "";
 
+  let showExampleDialog = false;
+
   function executeCode() {
     try {
       // Evaluates the code entered by the user
@@ -13,6 +15,10 @@
     } catch (error) {
       result = error.message;
     }
+  }
+
+  function showExample() {
+    showExampleDialog = true;
   }
 </script>
 
@@ -28,43 +34,78 @@
   <main>
     <textarea bind:value={code} placeholder="Ingrese su código aquí" />
     <button on:click={executeCode}>Ejecutar</button>
+    <button on:click={() => showExample()}>Mostrar Ejemplo</button>
 
     <div class="result">
       {#if result}
         <pre>{result}</pre>
       {/if}
     </div>
+
+    <!-- Cuadro de texto para mostrar el ejemplo -->
+    {#if showExampleDialog}
+      <div class="example-dialog">
+        <p>Aquí tienes un ejemplo:</p>
+        <pre>
+// Suma dos números
+var numero1 = 8;
+var numero2 = 17;
+var suma = numero1 + numero2;
+
+// Construye un saludo personalizado
+var nombre = "Juan";
+var saludo = "¡Hola, " + nombre + "!";
+
+// Muestra la suma y el saludo en la consola
+console.log(suma);
+console.log(saludo);
+
+// Retorna un mensaje
+"Operaciones realizadas con éxito."
+      </pre>
+      </div>
+    {/if}
   </main>
-
-  <style>
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    textarea {
-      width: 300px;
-      height: 200px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      padding: 8px 16px;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-
-    .result {
-      margin-top: 10px;
-    }
-
-    pre {
-      background-color: #f3f3f3;
-      padding: 10px;
-      border-radius: 4px;
-      overflow: auto;
-    }
-  </style>
 </div>
+
+<style>
+  /* Estilos CSS para el cuadro de ejemplo */
+  .example-dialog {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  /* Otros estilos */
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  textarea {
+    width: 300px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .result {
+    margin-top: 10px;
+  }
+
+  pre {
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 4px;
+    overflow: auto;
+  }
+</style>

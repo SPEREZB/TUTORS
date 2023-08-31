@@ -48,4 +48,4 @@ export interface Course extends Lo {
     properties?: Properties;
     calendar?: Properties;
 }
-export declare const preOrder: any;
+export declare const preOrder: Map<string, number>;

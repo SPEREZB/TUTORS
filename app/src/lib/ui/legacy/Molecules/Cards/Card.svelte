@@ -8,6 +8,8 @@
   import { cardTransition } from "$lib/ui/animations";
   import { onMount } from "svelte";
 
+  import { goto } from "$app/navigation";
+
   let offsetX = 0;
   let offsetY = 0;
   const maxOffset = 10; // Cambia esto para ajustar la cantidad de parallax
@@ -91,3 +93,13 @@
     </footer>
   </div>
 </a>
+
+<style>
+  a {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  a:hover {
+    transform: translate(10px, 10px);
+  }
+</style>

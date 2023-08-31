@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
-
+  import { writable } from "svelte/store";
   import { setInitialClassState, toastStore, type ToastSettings } from "@skeletonlabs/skeleton";
   import {
     transitionKey,
@@ -24,6 +24,12 @@
     updatePresence
   } from "$lib/services/presence";
 
+  // Obtiene la URL del archivo actual
+  const currentURL = import.meta.url;
+
+  // Extrae la ruta del directorio del archivo actual
+  const directoryPath = currentURL.substring(0, currentURL.lastIndexOf("/"));
+
   let currentRoute = "";
 
   export let data: any;
@@ -40,6 +46,7 @@
   }
 
   onMount(() => {
+    console.log(import.meta.url);
     setInitialClassState();
     initServices(data.session);
     setInterval(updatePageCount, 30 * 1000);
@@ -48,6 +55,8 @@
   let code = "";
   let result = "";
 
+  let showExampleDialog = false;
+
   function executeCode() {
     try {
       // Evaluates the code entered by the user
@@ -55,6 +64,14 @@
     } catch (error) {
       result = error.message;
     }
+  }
+  function navigateToNewPage() {
+    showExampleDialog = false;
+    result = ""; // Limpia el resultado
+    page.navigateTo("otra-pagina"); // Cambia "otra-pagina" por la URL que deseas
+  }
+  function showExample() {
+    showExampleDialog = true;
   }
 
   let presenceSetup: boolean = false;
@@ -173,15 +190,57 @@
 "
         on:click={executeCode}>Ejecutar</button
       >
+      <button on:click={() => showExample()}>Mostrar Ejemplo</button>
 
       <div class="result">
         {#if result}
-          <pre>{result}</pre>
+          <div class="example-code">{result}</div>
         {/if}
       </div>
+
+      <!-- Cuadro de texto para mostrar el ejemplo -->
+      {#if showExampleDialog}
+        <div class="example-dialog">
+          <p class="example-code">Aquí tienes un ejemplo:</p>
+          <div class="example-code">
+            // Suma dos números<br />
+            var numero1 = 8;<br />
+            var numero2 = 17;<br />
+            var suma = numero1 + numero2;<br /><br />
+
+            // Construye un saludo personalizado<br />
+            var nombre = "Juan";<br />
+            var saludo = "¡Hola, " + nombre + "!";<br /><br />
+
+            // Muestra la suma y el saludo en la consola<br />
+            console.log(suma);<br />
+            console.log(saludo);<br /><br />
+
+            // Retorna un mensaje<br />
+            "Operaciones realizadas con éxito."
+          </div>
+        </div>
+      {/if}
     </main>
 
     <style>
+      .example-dialog {
+        background-color: #c8e6c9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+      }
+
+      /* Estilos para el código de ejemplo */
+      .example-code {
+        background-color: #c8e6c9; /* Verde claro */
+        color: black; /* Texto en negro */
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+        width: 450px; /* Ancho de 150px */
+      }
+
       main {
         display: flex;
         flex-direction: column;
@@ -204,7 +263,7 @@
       }
 
       pre {
-        background-color: #f3f3f3;
+        background-color: #c8e6c9;
         padding: 10px;
         border-radius: 4px;
         overflow: auto;
