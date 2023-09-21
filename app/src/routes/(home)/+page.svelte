@@ -32,7 +32,7 @@
       <div class="space-x-4 space-y-4">
         <a
           class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
-          href="http://127.0.0.1:3000/course/reference-course"
+          href="https://b90z2v4j-3000.brs.devtunnels.ms/course/reference-course"
           target="_blank"
           rel="noreferrer"
         >
